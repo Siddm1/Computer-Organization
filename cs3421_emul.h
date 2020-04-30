@@ -8,7 +8,9 @@
 
 /* username: sdmahade
    Name: Siddhesh Mahadeshwar
-   Program Description: (Program 1: Computer Organization)
+   Program Description: (Program 2: Computer Organization): This file is the header file for the emulator.
+   It is responsible for defining all the prototypes for any functions that the main .c
+   emulator may need.
  */
 
 #ifndef EMUL_H

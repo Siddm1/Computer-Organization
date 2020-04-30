@@ -7,7 +7,7 @@
 
 /* username: sdmahade
    Name: Siddhesh Mahadeshwar
-   Program Description: (Program 1: Computer Organization): This file is the header file for the clock device
+   Program Description: (Program 2: Computer Organization): This file is the header file for the clock device
    for the emulator. It is responsible for defining all the prototypes for any functions that the main .c
    clock device may need.
  */
@@ -19,6 +19,9 @@ typedef struct
 {
     unsigned int count;
 } Clock;
+
+// returns the current tick number
+int getCurrentTickN();
 
 // The tick command accepts a positive decimal integer indicating how many clock ticks should be issued to 
 // attached devices. The internal counter is incremented by the specified number of ticks.

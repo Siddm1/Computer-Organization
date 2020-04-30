@@ -10,13 +10,19 @@
 #include "cs3421_memory.h"
 #include "cs3421_emul.h"
 #include "cs3421_imemory.h"
+#include "cs3421_iodev.h"
+#include "cs3421_cache.h"
 
 /* username: sdmahade
    Name: Siddhesh Mahadeshwar
-   Program Description: (Program 1: Computer Organization): This file is the C file for the clock device
-   for the emulator. It is responsible for defining all the prototypes for any functions that the main .c
-   clock device may need.
+   Program Description: (Program 2: Computer Organization): This file is the C file for the clock device
+   for the emulator. It is responsible for the implementation of all the prototype functions defined 
+   initially in the header file.
  */
+
+int count = 0;
+
+int currentTick = 0;
 
 Clock clock;
 
@@ -24,17 +30,40 @@ Clock clock;
 void clockReset()
 {
     clock.count = 0;
+    currentTick = 0;
+}
+
+
+
+// returns the current tick number
+int getCurrentTickN()
+{
+    return currentTick;
 }
 
 // adds ticks to the clock counter
 void tick(unsigned int amount)
 {
+    currentTick = 0;
     clock.count += amount;
-    cpuStartTick();
-    for (unsigned int i = 1; i < clock.count + 1; i++) // runs cpuCycle and memoryCycle for the number of ticks given
+
+    if (count == 0)
     {
-        cpuDoCycleWork(); 
+        cpuStartTick();
+        count++;
+    }
+
+    unsigned int i;
+
+    for (i = 0; i < amount; i++) // runs cpuCycle and memoryCycle for the number of ticks given
+    {
+        currentTick++;
+        ioRead();
+        ioWrite();
+        cpuDoCycleWork2(); 
         memoryDoCycleWork();
+        imemoryDoCycleWork();
+        TCdoCycleWork();
     }
 
 }

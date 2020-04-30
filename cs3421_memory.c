@@ -10,12 +10,14 @@
 #include "cs3421_memory.h"
 #include "cs3421_emul.h"
 #include "cs3421_imemory.h"
+#include "cs3421_cache.h"
+#include "cs3421_iodev.h"
 
 /* username: sdmahade
    Name: Siddhesh Mahadeshwar
-   Program Description: (Program 1: Computer Organization): This file is the C file for the memory device
-   for the emulator. It is responsible for defining all the prototypes for any functions that the main .c
-   memory device may need.
+   Program Description: (Program 2: Computer Organization): This file is the C file for the memory device
+   for the emulator. It is responsible for the implementation of all the prototype functions defined 
+   initially in the header file.
  */
 
 
@@ -43,7 +45,7 @@ void memoryReset()
 // The dump command shows the contents of memory starting at address <address>, and continuing for <count> bytes.
 void memoryDump(int hexAddress, int hexCount)
 {
-    printf("Addr 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F");
+    printf("Addr   00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F");
 
     int j = 16; // tracks progress on the line
     bool space = false;
@@ -62,7 +64,7 @@ void memoryDump(int hexAddress, int hexCount)
             int mod = i % 16;
             int current = i - mod;
 
-            printf("0x%02X ", current);
+            printf("0x%04X ", current);
             j = 0;
         }
 
@@ -76,7 +78,7 @@ void memoryDump(int hexAddress, int hexCount)
             j += buffer;
         }
 
-        printf("%X ", memArray[i]);
+        printf("%02X ", memArray[i]);
         j++;
        
     }
@@ -104,6 +106,12 @@ unsigned int getMemoryValue(unsigned int index)
     unsigned int memoryValue = memArray[index]; 
 
     return memoryValue;
+}
+
+// set memory value function which will set paramter 
+void setMemoryValue(unsigned int ttt, unsigned int regsss)
+{
+    memArray[ttt] = regsss;
 }
 
 // Starts one tick for the memory.

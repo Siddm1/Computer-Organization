@@ -7,7 +7,7 @@
 
 /* username: sdmahade
    Name: Siddhesh Mahadeshwar
-   Program Description: (Program 1: Computer Organization): This file is the header file for the memory device
+   Program Description: (Program 2: Computer Organization): This file is the header file for the memory device
    for the emulator. It is responsible for defining all the prototypes for any functions that the main .c
    memory device may need.
  */
@@ -39,13 +39,8 @@ void memoryDoCycleWork();
 // Check if memory needs more work to be done.
 bool memoryMoreWork();
 
-/*
-// Holds the state of the memory at a given moment.
-char* memoryState(int state);
-
-// Executes the fetch cycle for the memory device.
-void memoryFetch(unsigned int address, unsigned char *answerPtr, bool *fetchDonePtr);
-*/
+// set memory value function which will set paramter 
+void setMemoryValue(unsigned int ttt, unsigned int regsss);
 
 // Returns the value stored at the given index in the parameter
 unsigned int getMemoryValue(unsigned int index);

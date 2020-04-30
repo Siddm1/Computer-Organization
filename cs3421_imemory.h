@@ -8,9 +8,9 @@
 
 /* username: sdmahade
    Name: Siddhesh Mahadeshwar
-   Program Description: (Program 1: Computer Organization): This file is the C file for the instruction memory device
+   Program Description: (Program 2: Computer Organization): This file is the header file for the iMemory device
    for the emulator. It is responsible for defining all the prototypes for any functions that the main .c
-   memory device may need.
+   iMemory device may need.
  */
 
 #ifndef IMEMORY_H
@@ -18,6 +18,7 @@
 
  // The “create” command accepts a single integer parameter which indicates the size of the memory in bytes.
 void icreate(int size);
+
 
 // The “reset” command causes all of the allocated memory to be set to zero.
 void imemoryReset();
@@ -30,12 +31,15 @@ unsigned int getiMemoryValue(unsigned int index);
 // The set commands initializes memory to a user supplied set of values. The “hex address” specifies where to 
 // begin setting memory values, “hex count” is how many bytes will be assigned, and is followed by “hex count” 
 // number of hex bytes, separated by a single space.
-void iset(int hexAddress, char* filename);
+bool iset(int hexAddress, char* filename);
 
 // Starts one tick for the memory.
 void imemoryStartTick();
 
 // Does the cycle work for the memory device.
 void imemoryDoCycleWork();
+
+// frees allocated imemory array
+void ifreeVariables();
 
 #endif

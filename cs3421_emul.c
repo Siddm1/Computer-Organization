@@ -10,11 +10,13 @@
 #include "cs3421_memory.h"
 #include "cs3421_emul.h"
 #include "cs3421_imemory.h"
+#include "cs3421_cache.h"
+#include "cs3421_iodev.h"
 
 /* username: sdmahade
    Name: Siddhesh Mahadeshwar
-   Program Description: (Program 1: Computer Organization): This is the emulator device for this program which
-                        contains the main method with executing all the required parsing.
+   Program Description: (Program 2: Computer Organization): This is the emulator device for this program which
+   contains the main method executing all the required parsing for all the devices. 
  */
 
 Emulator emulator;
@@ -46,8 +48,7 @@ int main(int argc, char** argv)
     ignore = malloc(sizeof(char*));
     char* reg = "";
     reg = malloc(sizeof(char*));
-    char* filename = "";
-    filename = malloc(sizeof(char*));
+    char filename[512];
     unsigned int input3;
     unsigned int memD1;
     unsigned int memD2;
@@ -102,6 +103,7 @@ int main(int argc, char** argv)
                 {
                     return 1;
                 }
+
                 
                 if (fscanf(fp, "%s", reg) == 0) // scans the register where value must be set
                 {
@@ -119,6 +121,30 @@ int main(int argc, char** argv)
             else if (strcmp(input2, "dump") == 0) // checks if command is dump
             {
                 cpuDump(); // calls the cpuDump() method
+            }
+        }
+
+        else if (strcmp(input, "cache") == 0) // compares the first word to check if the device is CPU
+        {
+            if (fscanf(fp, "%s", input2) == 0) // scans the second word
+            {
+                return 1;
+            }
+            if (strcmp(input2, "reset") == 0) // checks if command is reset
+            {
+                cacheReset(); // calls the reset command on the cache
+            }
+            if (strcmp(input2, "on") == 0) // checks if the command is on
+            {
+                cacheOn(); // calls the cacheOn function to turn the cache on
+            }
+            if (strcmp(input2, "off") == 0) // checks if command is off
+            {
+                cacheOff(); // calls the cacheOff() method to turn the cache off
+            }
+            if (strcmp(input2, "dump") == 0) // checks if command is dump
+            {
+                cacheDump(); // calls the cacheDump() method to dump the contents the cache
             }
         }
 
@@ -179,6 +205,35 @@ int main(int argc, char** argv)
             }
         }
 
+        // -------------------------------------------------------------------------------------------
+
+        else if (strcmp(input, "iodev") == 0) // compares if device is memory
+        {
+            if (fscanf(fp, "%s", input2) == 0)
+            {
+                return 1;
+            }
+
+            else if (strcmp(input2, "reset") == 0) // checks if second scan is reset
+            {
+                ioReset();
+            }
+            else if (strcmp(input2, "load") == 0) // checks if second scan is set
+            {
+                if (fscanf(fp, "%s", filename) == 0)
+                {
+                    return 1;
+                }
+
+                ioLoad(filename);
+
+            }
+            else if (strcmp(input2, "dump") == 0)
+            {
+                ioDump();
+            }
+        }
+
         // -----------------------------------------------------------------------------------------------------------
 
         else if (strcmp(input, "memory") == 0) // compares if device is memory
@@ -204,6 +259,7 @@ int main(int argc, char** argv)
             {
                 if (fscanf(fp, "%X", &memD1) == 0)// scans the starting hexAddress
                 {
+                    emulator.address = memD1;
                     return 1;
                 }
 
@@ -247,10 +303,14 @@ int main(int argc, char** argv)
 
     // frees all variables
     freeVariables();
+    ifreeVariables();
     free(input);
     free(input2);
     free(ignore);
     free(reg);
+    ioFree();
+    
 
     return 0;
+    
 }
